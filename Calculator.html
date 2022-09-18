@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <title>Калькулятор орбит</title>
+    <meta charset="UTF-8">
+    <link href="style.css" rel="stylesheet">
+</head>
+
+<body onload="init()">
+
+<div>
+
+    <div class="row">
+        <div class="span12">
+            <h1>Калькулятор орбит</h1>
+            <p>
+                <i>
+                    <b>Важно:</b> программа не учитывает наклон орбит планет.
+                </i>
+            </p>
+        </div>
+    </div>
+    <div class="row">
+        <ul class="thumbnails">
+            <li class="span4">
+                <div class="thumbnail">
+                    <canvas width="360" height="360" id="canvas-phase"></canvas>
+                    <div class="caption">
+                        <b>Планетарный фазовый угол</b> — угол между двумя планетами относительно Солнца.
+                    </div>
+                </div>
+            </li>
+            <li class="span4">
+                <div class="thumbnail">
+                    <canvas width="360" height="360" id="canvas-eject"></canvas>
+                    <div class="caption">
+                        <b>Угол выброса</b> — угол между ракетой и планетой, движущейся вокруг Солнца.
+                    </div>
+                </div>
+            </li>
+
+            <li class="span7">
+                <form class="form-horizontal" id="calculator">
+                    <fieldset>
+                        <div class="control-group">
+                            <label class="control-label" for="origin">Старт с:</label>
+                            <div class="controls">
+                                <select id="origin"></select>
+                            </div>
+                        </div>
+                        <div class="control-group">
+                            <label class="control-label" for="destination">Цель:</label>
+                            <div class="controls">
+                                <select id="destination"></select>
+                            </div>
+                        </div>
+                        <div class="control-group">
+                            <label class="control-label" for="orbit">Стартовая орбита:</label>
+                            <div class="controls">
+                                <input type="text" id="orbit" style="width:50px" value="100"> км (над уровнем моря)
+                            </div>
+                        </div>
+                        <div class="control-group">
+                            <label class="control-label" for="phase">Планетарный фазовый угол:</label>
+                            <div class="controls">
+                                <input readonly="readonly" type="text" id="phase" value="">
+                            </div>
+                        </div>
+                        <div class="control-group">
+                            <label class="control-label" for="ejection">Угол выброса:</label>
+                            <div class="controls">
+                                <input readonly="readonly" type="text" id="ejection" value="">
+                            </div>
+                        </div>
+                        <div class="control-group">
+                            <label class="control-label" for="velocity">Конечная скорость ракеты:</label>
+                            <div class="controls">
+                                <input readonly="readonly" type="text" id="velocity" value="">
+                            </div>
+                        </div>
+                        <div class="control-group">
+                            <label class="control-label" for="deltav">Необходимое ускорение Δv:</label>
+                            <div class="controls">
+                                <input readonly="readonly" type="text" id="deltav" value="">
+                            </div>
+                        </div>
+                        <div class="control-group">
+                            <div class="controls" id="notes">
+                                <div id="same-warning" style="display:none"><b>Ошибка:</b>
+                                    Пожалуйста, выберите разные тела.
+                                </div>
+                                <div id="parent-warning" style="display:none"><b>Ошибка:</b> Можно рассчитать переходы
+                                    только между телами, вращающимися вокруг Солнца или планеты.
+                                </div>
+                            </div>
+                        </div>
+                    </fieldset>
+                </form>
+            </li>
+        </ul>
+
+        <h2>Как использовать эти значения?</h2>
+        <ol>
+            <li>Поместите ракету на <b>круговую парковочную орбиту</b> с наклоном 0° вокруг вашей планеты/луны
+                старта.
+            </li>
+            <li>Получите:
+                <b>планетарный фазовый угол</b>,
+                <b>угол выброса</b> и
+                <b>конечную скорость ракеты</b> в соответствии с орбитой вашего исходного положения, орбитой вашего
+                пункта назначения и информацией о вашей парковочной орбите, как описано выше.
+            </li>
+            <li>Timewarp until the planetary alignment is right. For a positive
+                <b>phase angle</b>, you want the destination to be ahead of you, and for a negative phase angle you
+                want it behind you.
+            </li>
+            <li>Timewarp some more, until your ship is properly positioned for the transfer burn in the parking
+                orbit. You need to put
+                yourself at the
+                <b>ejection angle</b> before your origin's prograde (for a higher destination orbit) or retrograde
+                (for a lower destination)
+                orbital heading, as shown in the right image.
+            </li>
+            <li>Once positioned, turn prograde and burn, until you reach
+                <b>ejection velocity</b>.
+            </li>
+        </ol>
+        <p>Zoom out to see your orbit's intersection with the target planet's orbit. If the orbits don't match at
+            the destination,
+            perform minimal pro- or retrograde correction burns to achieve intercept. If you have your maximum
+            conics set to 3 or
+            more in
+            <i>settings.cfg</i>, you will see the target body intercept once you get it right. Congratulations, you
+            are on your way
+            to another planet!</p>
+
+
+        <p>Once you have achieved an intercept trajectory, minimal pro- or retrograde burns (sometimes made with RCS
+            translation,
+            in order to not overdo them) can allow you to adjust the periapsis at your destination. Use this to put
+            yourself into
+            a direct atmospheric capture, or adjust it otherwise to your liking.</p>
+
+    </div>
+
+</div>
+
+<script src="jquery.min.js"></script>
+<script src="jcanvas.min.js"></script>
+<script src="kspcalc.js"></script>
+
+</body>
+</html>
