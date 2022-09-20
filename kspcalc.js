@@ -1,4 +1,4 @@
-data = {
+let data = {
     // all values in km and corresponding
     Sun: {
         name: "Солнце",
@@ -104,6 +104,7 @@ let canvas_phase;
 let ctx_phase;
 
 function init() {
+
     canvas_eject = document.getElementById('canvas-eject');
     ctx_eject = canvas_eject.getContext('2d');
     canvas_phase = document.getElementById('canvas-phase');
