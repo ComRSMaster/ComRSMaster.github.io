@@ -150,44 +150,48 @@ function init() {
 }
 
 function validateInputs() {
-    $("#same-warning,#parent-warning").hide();
-    $("#phase,#ejection,#velocity,#deltav").val("Не рассчитано");
-    const o = $("#origin").find(":selected").val();
-    const d = $("#destination").find(":selected").val();
+    document.getElementById('same-warning').style = "display: none";
+    document.getElementById('parent-warning').style = "display: none";
+    document.getElementById('phase').value = "";
+    document.getElementById('ejection').value = "";
+    document.getElementById('velocity').value = "";
+    document.getElementById('deltav').value = "";
+    const o = document.getElementById('origin').value;
+    const d = document.getElementById('destination').value;
     let errorFree = true;
     if (o === d) {
         errorFree = false;
-        $("#same-warning").show();
+        document.getElementById('same-warning').style = "";
     }
     if (data[o].parent !== data[d].parent) {
         errorFree = false;
-        $("#parent-warning").show();
+        document.getElementById('parent-warning').style = "";
     }
 
     return errorFree;
 }
 
 function doTheMaths() {
-    const o = data[$("#origin").find(":selected").val()];
-    const d = data[$("#destination").find(":selected").val()];
+    const o = data[document.getElementById('origin').value];
+    const d = data[document.getElementById('destination').value];
     const p = data[o.parent];
 
     // phase angle:
     const t_h = Math.PI * Math.sqrt(Math.pow(o.alt + d.alt, 3) / (8 * p.mu));
     const phase = (180 - Math.sqrt(p.mu / d.alt) * (t_h / d.alt) * (180 / Math.PI)) % 360;
-    $("#phase").val("" + Math.round(phase * 100) / 100 + "°");
+    document.getElementById('phase').value = "" + Math.round(phase * 100) / 100 + "°";
 
     // velocity:
     const exitAlt = o.alt + o.soi; // approximation for exiting on the "outside"
     const v2 = Math.sqrt(p.mu / exitAlt) * (Math.sqrt((2 * d.alt) / (exitAlt + d.alt)) - 1);
-    const r = o.radius + parseInt($("#orbit").val());
+    const r = o.radius + parseInt(document.getElementById('orbit').value);
     const v = Math.sqrt((r * (o.soi * v2 * v2 - 2 * o.mu) + 2 * o.soi * o.mu) / (r * o.soi));
-    $("#velocity").val(Math.round(v * 100000) / 100 + " м/с");
+    document.getElementById('velocity').value = Math.round(v * 100000) / 100 + " м/с";
 
     // delta-v:
     const v_o = Math.sqrt(o.mu / r);
     const delta_v = v - v_o;
-    $("#deltav").val(Math.round(delta_v * 100000) / 100 + " м/c");
+    document.getElementById('deltav').value=Math.round(delta_v * 100000) / 100 + " м/c";
 
     // ejection angle:
     const eta = v * v / 2 - o.mu / r;
@@ -207,16 +211,17 @@ function doTheMaths() {
         eject = (90 - (phi * 180 / Math.PI) + (nu * 180 / Math.PI)) % 360;
     }
 
-    $("#ejection").val("" + Math.round(eject * 100) / 100 + "°");
+    document.getElementById('ejection').value="" + Math.round(eject * 100) / 100 + "°";
 
     draw(o, d, p, Math.round(phase * 100) / 100, Math.round(eject * 100) / 100);
 }
 
 function draw(o, d, p, phase, eject) {
     // clear canvases
-    $("#canvas-phase,#canvas-eject").clearCanvas();
+    ctx_phase.clearRect(0,0, canvas_phase.width, canvas_phase.height);
     ctx_phase.resetTransform();
     ctx_phase.scale(window.devicePixelRatio, window.devicePixelRatio);
+    ctx_eject.clearRect(0,0, canvas_eject.width, canvas_eject.height);
     ctx_eject.resetTransform();
     ctx_eject.scale(window.devicePixelRatio, window.devicePixelRatio);
 
@@ -424,9 +429,8 @@ function draw(o, d, p, phase, eject) {
     ctx_eject.fillText(o.name, 180, 180);
 }
 
-$("#origin,#destination,#orbit").change(function () {
-    validateInputs();
+function calc() {
     if (validateInputs()) {
         doTheMaths();
     }
-});
+}

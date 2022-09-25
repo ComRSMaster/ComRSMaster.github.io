@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <title>Калькулятор перелётов</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">
+</head>
+
+<body onload="init()">
+<nav class="navbar navbar-dark bg-dark">
+    <div class="container-fluid">
+        <span class="navbar-brand mb-0 h1" href="#">Калькулятор перелётов</span>
+    </div>
+</nav>
+<main class="container">
+    <div class="row g-3 my-3">
+        <div class="col">
+            <div class="card text-center" style="width: min-content;">
+                <canvas class="card-img-top" id="canvas-phase"></canvas>
+                <hr class="mb-0 mt-0">
+                <div class="card-body text-dark">
+                    <h5 class="card-title">Планетарный фазовый угол</h5>
+                    <p class="card-text">Угол между двумя планетами относительно Солнца</p>
+                </div>
+            </div>
+        </div>
+        <div class="col">
+            <div class="card text-center" style="width: min-content;">
+                <canvas class="card-img-top" id="canvas-eject"></canvas>
+                <hr class="mb-0 mt-0">
+                <div class="card-body text-dark">
+                    <h5 class="card-title">Угол выброса</h5>
+                    <p class="card-text">Угол между ракетой и планетой, движущейся вокруг Солнца</p>
+                </div>
+            </div>
+        </div>
+        <div class="col">
+            <div class="card border-info" style="width: 22rem;">
+                <h5 class="card-header text-center">Калькулятор</h5>
+                <div class="card-body">
+                    <form id="calculator card-text">
+                        <div class="row mb-1">
+                            <label class="col-sm-4 col-form-label" for="origin">Старт с:</label>
+                            <div class="col">
+                                <select class="form-select" id="origin" oninput="calc()"></select>
+                            </div>
+                        </div>
+                        <div class="row mb-1">
+                            <label class="col-sm-4 col-form-label" for="destination">Цель:</label>
+                            <div class="col">
+                                <select class="form-select" id="destination" oninput="calc()"></select>
+                            </div>
+                        </div>
+                        <div class="row mb-1">
+                            <label class="form-label col-sm-4" for="orbit">Стартовая орбита:</label>
+                            <div class="col">
+                                <input class="form-control" type="text" id="orbit" value="100" oninput="calc()">
+                                <div class="form-text">км (над ур. моря)</div>
+                            </div>
+                        </div>
+                        <hr class="mb-2 mt-2">
+                        <div class="row mb-1">
+                            <label class="form-label col-sm-6" for="phase">Планетарный фазовый угол:</label>
+                            <div class="col">
+                                <input class="form-control" type="text" id="phase" value="" readonly>
+                            </div>
+                        </div>
+                        <div class="row mb-1">
+                            <label class="form-label col-sm-6" for="ejection">Угол выброса:</label>
+                            <div class="col">
+                                <input class="form-control" type="text" id="ejection" value="" readonly>
+                            </div>
+                        </div>
+                        <div class="row mb-1">
+                            <label class="form-label col-sm-6" for="velocity">Конечная скорость ракеты:</label>
+                            <div class="col">
+                                <input class="form-control" type="text" id="velocity" value="" readonly>
+                            </div>
+                        </div>
+                        <div class="row mb-1">
+                            <label class="form-label col-sm-6" for="deltav">Необходимое ускорение Δv:</label>
+                            <div class="col">
+                                <input class="form-control" type="text" id="deltav" value="" readonly>
+                            </div>
+                        </div>
+                        <div class="row mb-1">
+                            <div class="col" id="notes">
+                                <div class="alert alert-danger" id="same-warning" style="display: none" role="alert">
+                                    <div>Пожалуйста, выберите разные тела.</div>
+                                </div>
+                                <div class="alert alert-danger" id="parent-warning" style="display: none" role="alert">
+                                    <div>Можно рассчитать переходы только между телами, вращающимися вокруг Солнца или
+                                        планеты.
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+
+<script src="calc.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-u1OknCvxWvY5kfmNBILK2hRnQC3Pr17a+RTT6rIHI7NnikvbZlHgTPOOmMi466C8"
+        crossorigin="anonymous"></script>
+
+</body>
+</html>

@@ -1,189 +1,53 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-    <title>Калькулятор перелётов</title>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>ComRS Master</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet"
           integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">
 </head>
 
-<svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
-    <symbol id="check-circle-fill" viewBox="0 0 16 16">
-        <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z"/>
-    </symbol>
-    <symbol id="info-fill" viewBox="0 0 16 16">
-        <path d="M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16zm.93-9.412-1 4.705c-.07.34.029.533.304.533.194 0 .487-.07.686-.246l-.088.416c-.287.346-.92.598-1.465.598-.703 0-1.002-.422-.808-1.319l.738-3.468c.064-.293.006-.399-.287-.47l-.451-.081.082-.381 2.29-.287zM8 5.5a1 1 0 1 1 0-2 1 1 0 0 1 0 2z"/>
-    </symbol>
-    <symbol id="exclamation-triangle-fill" viewBox="0 0 16 16">
-        <path d="M8.982 1.566a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767L8.982 1.566zM8 5c.535 0 .954.462.9.995l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 5.995A.905.905 0 0 1 8 5zm.002 6a1 1 0 1 1 0 2 1 1 0 0 1 0-2z"/>
-    </symbol>
-</svg>
-
+<body>
 <nav class="navbar navbar-dark bg-dark">
     <div class="container-fluid">
-        <span class="navbar-brand mb-0 h1" href="#">Калькулятор перелётов</span>
-        <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasDarkNavbar"
-                aria-controls="offcanvasDarkNavbar">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="offcanvas offcanvas-end text-bg-dark" tabindex="-1" id="offcanvasDarkNavbar"
-             aria-labelledby="offcanvasDarkNavbarLabel">
-            <div class="offcanvas-header">
-                <h5 class="offcanvas-title" id="offcanvasDarkNavbarLabel">Другие проекты</h5>
-                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas"
-                        aria-label="Close"></button>
-            </div>
-            <div class="offcanvas-body">
-                <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
-                    <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="#">Главная страница</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Link</a>
-                    </li>
-                </ul>
-            </div>
-        </div>
+        <span class="navbar-brand mb-0 h1" href="#">Главная страница</span>
     </div>
 </nav>
-
-<body onload="init()">
-<div class="row" style="width: fit-content; margin-top: 1rem;">
-    <div class="col">
-        <div class="card text-center" style="width: min-content;">
-            <canvas class="card-img-top" style="margin: 5px;" width="360" height="360" id="canvas-phase"></canvas>
-            <div class="card-body text-dark">
-                <h5 class="card-title">Планетарный фазовый угол</h5>
-                <p class="card-text">Угол между двумя планетами относительно Солнца</p>
+<main class="container">
+    <h1 class="text-center py-5">Мои проекты</h1>
+    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+        <div class="col">
+            <div class="card border-light shadow">
+                <div class="card-body">
+                    <h4 class="card-title">Калькулятор перелётов</h4>
+                    <p class="card-text">Программа для расчёта количества топлива и стартового окна для
+                        межпланетных перелётов</p>
+                    <a href="SpaceCalc/index.html" class="btn btn-primary">Открыть</a>
+                </div>
+            </div>
+        </div>
+        <div class="col">
+            <div class="card border-light shadow">
+                <div class="card-body">
+                    <h4 class="card-title">Козловский</h4>
+                    <p class="card-text">Telegram-бот</p>
+                    <a href="https://github.com/ComRSMaster/Kozlovskiy" class="btn btn-primary">Открыть</a>
+                </div>
+            </div>
+        </div>
+        <div class="col">
+            <div class="card border-light shadow">
+                <div class="card-body">
+                    <h4 class="card-title">Побег из Кащенко</h4>
+                    <p class="card-text">Игра</p>
+                    <a href="https://gameframes.itch.io/escapefromkashenko" class="btn btn-primary">Открыть</a>
+                </div>
             </div>
         </div>
     </div>
-    <div class="col">
-        <div class="card text-center" style="width: min-content;">
-            <canvas class="card-img-top" style="margin: 5px;" width="360" height="360" id="canvas-eject"></canvas>
-            <div class="card-body text-dark">
-                <h5 class="card-title">Угол выброса</h5>
-                <p class="card-text">Угол между ракетой и планетой, движущейся вокруг Солнца</p>
-            </div>
-        </div>
-    </div>
-    <div class="col">
-        <div class="card border-info" style="width: 22rem;">
-            <h5 class="card-header text-center">Калькулятор</h5>
-            <div class="card-body">
-                <form id="calculator card-text">
-                    <div class="row mb-1">
-                        <label class="col-sm-4 col-form-label" for="origin">Старт с:</label>
-                        <div class="col">
-                            <select class="form-select" id="origin"></select>
-                        </div>
-                    </div>
-                    <div class="row mb-1">
-                        <label class="col-sm-4 col-form-label" for="destination">Цель:</label>
-                        <div class="col">
-                            <select class="form-select" id="destination"></select>
-                        </div>
-                    </div>
-                    <div class="row mb-1">
-                        <label class="form-label col-sm-4" for="orbit">Стартовая орбита:</label>
-                        <div class="col">
-                            <input class="form-control" type="text" id="orbit" value="100">
-                            <div class="form-text">км (над ур. моря)</div>
-                        </div>
-                    </div>
-                    <hr>
-                    <div class="row mb-1">
-                        <label class="form-label col-sm-6" for="phase">Планетарный фазовый угол:</label>
-                        <div class="col">
-                            <input class="form-control" type="text" id="phase" value="" readonly>
-                        </div>
-                    </div>
-                    <div class="row mb-1">
-                        <label class="form-label col-sm-6" for="ejection">Угол выброса:</label>
-                        <div class="col">
-                            <input class="form-control" type="text" id="ejection" value="" readonly>
-                        </div>
-                    </div>
-                    <div class="row mb-1">
-                        <label class="form-label col-sm-6" for="velocity">Конечная скорость ракеты:</label>
-                        <div class="col">
-                            <input class="form-control" type="text" id="velocity" value="" readonly>
-                        </div>
-                    </div>
-                    <div class="row mb-1">
-                        <label class="form-label col-sm-6" for="deltav">Необходимое ускорение Δv:</label>
-                        <div class="col">
-                            <input class="form-control" type="text" id="deltav" value="" readonly>
-                        </div>
-                    </div>
-                    <div class="row mb-1">
-                        <div class="col" id="notes">
-                            <div class="alert alert-danger" id="same-warning" style="display: none" role="alert">
-                                <div>Пожалуйста, выберите разные тела.</div>
-                            </div>
-                            <div class="alert alert-danger" id="parent-warning" style="display: none" role="alert">
-                                <div>Можно рассчитать переходы только между телами, вращающимися вокруг Солнца или
-                                    планеты.
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-            </form>
-        </div>
-    </div>
-</div>
-</div>
-
-<h2>Как использовать эти значения?</h2>
-<ol>
-    <li>Поместите ракету на <b>круговую парковочную орбиту</b> с наклоном 0° вокруг вашей планеты/луны
-        старта.
-    </li>
-    <li>Получите:
-        <b>планетарный фазовый угол</b>,
-        <b>угол выброса</b> и
-        <b>конечную скорость ракеты</b> в соответствии с орбитой вашего исходного положения, орбитой вашего
-        пункта назначения и информацией о вашей парковочной орбите, как описано выше.
-    </li>
-    <li>Timewarp until the planetary alignment is right. For a positive
-        <b>phase angle</b>, you want the destination to be ahead of you, and for a negative phase angle you
-        want it behind you.
-    </li>
-    <li>Timewarp some more, until your ship is properly positioned for the transfer burn in the parking
-        orbit. You need to put
-        yourself at the
-        <b>ejection angle</b> before your origin's prograde (for a higher destination orbit) or retrograde
-        (for a lower destination)
-        orbital heading, as shown in the right image.
-    </li>
-    <li>Once positioned, turn prograde and burn, until you reach
-        <b>ejection velocity</b>.
-    </li>
-</ol>
-<p>Zoom out to see your orbit's intersection with the target planet's orbit. If the orbits don't match at
-    the destination,
-    perform minimal pro- or retrograde correction burns to achieve intercept. If you have your maximum
-    conics set to 3 or
-    more in
-    <i>settings.cfg</i>, you will see the target body intercept once you get it right. Congratulations, you
-    are on your way
-    to another planet!</p>
-
-
-<p>Once you have achieved an intercept trajectory, minimal pro- or retrograde burns (sometimes made with RCS
-    translation,
-    in order to not overdo them) can allow you to adjust the periapsis at your destination. Use this to put
-    yourself into
-    a direct atmospheric capture, or adjust it otherwise to your liking.</p>
-
-
-<script src="jquery.min.js"></script>
-<script src="jcanvas.min.js"></script>
-<script src="kspcalc.js"></script>
+</main>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-u1OknCvxWvY5kfmNBILK2hRnQC3Pr17a+RTT6rIHI7NnikvbZlHgTPOOmMi466C8"
         crossorigin="anonymous"></script>
-
 </body>
 </html>
