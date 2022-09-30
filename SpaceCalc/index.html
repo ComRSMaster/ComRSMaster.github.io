@@ -86,6 +86,12 @@
                             </div>
                         </div>
                         <div class="row mb-1">
+                            <label class="form-label col-sm-6" for="time">Время перелёта:</label>
+                            <div class="col">
+                                <input class="form-control" type="text" id="time" value="" readonly>
+                            </div>
+                        </div>
+                        <div class="row mb-1">
                             <div class="col" id="notes">
                                 <div class="alert alert-danger" id="same-warning" style="display: none" role="alert">
                                     <div>Пожалуйста, выберите разные тела.</div>
@@ -102,17 +108,22 @@
             </div>
         </div>
     </div>
-    <h1 class="fw-semibold mt-5">Как работает программа?</h1>
-    <p>На вход подаются конфигурация небесного тела:</p>
-    <ul>
-        <li></li>
+    <h1 class="fw-semibold my-4">Как работает программа?</h1>
+    <p class="fs-5">На вход подаются параметры небесного тела:</p>
+    <ul class="fs-5 fw-semibold">
+        <li>Высота от Солнца</li>
+        <li>Гравитационный параметр</li>
+        <li>Радиус</li>
+        <li>Наклон орбиты относительно Солнца</li>
+        <li>Радиус действия гравитации</li>
     </ul>
+    <p class="fs-5">Для расчёта <var>планетарного фазового угла</var> используется формула:</p>
+    <a class="py-5" href="https://www.jpl.nasa.gov/edu/teach/activity/lets-go-to-mars-calculating-launch-windows/">Формулы</a>
 </main>
 
 <script src="calc.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-u1OknCvxWvY5kfmNBILK2hRnQC3Pr17a+RTT6rIHI7NnikvbZlHgTPOOmMi466C8"
         crossorigin="anonymous"></script>
-
 </body>
 </html>

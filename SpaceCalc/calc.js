@@ -37,16 +37,16 @@ let data = {
         soi: 929000, // Радиус действия гравитации
         color: "skyblue"
     },
-    Moon: {
-        name: "Луна",
-        parent: "Earth",
-        alt: 384399,
-        mu: 4902.8000,
-        radius: 1737.1,
-        inclination: 0,
-        soi: 66000,
-        color: "gray"
-    },
+    // Moon: {
+    //     name: "Луна",
+    //     parent: "Earth",
+    //     alt: 384399,
+    //     mu: 4902.8000,
+    //     radius: 1737.1,
+    //     inclination: 0,
+    //     soi: 66000,
+    //     color: "gray"
+    // },
     Mars: {
         name: "Марс",
         parent: "Sun",
@@ -178,8 +178,10 @@ function doTheMaths() {
 
     // phase angle:
     const t_h = Math.PI * Math.sqrt(Math.pow(o.alt + d.alt, 3) / (8 * p.mu));
+    document.getElementById('time').value = Math.round(t_h / 31536) / 1000 + " лет";
+
     const phase = (180 - Math.sqrt(p.mu / d.alt) * (t_h / d.alt) * (180 / Math.PI)) % 360;
-    document.getElementById('phase').value = "" + Math.round(phase * 100) / 100 + "°";
+    document.getElementById('phase').value = Math.round(phase * 100) / 100 + "°";
 
     // velocity:
     const exitAlt = o.alt + o.soi; // approximation for exiting on the "outside"
@@ -191,7 +193,7 @@ function doTheMaths() {
     // delta-v:
     const v_o = Math.sqrt(o.mu / r);
     const delta_v = v - v_o;
-    document.getElementById('deltav').value=Math.round(delta_v * 100000) / 100 + " м/c";
+    document.getElementById('deltav').value = Math.round(delta_v * 100000) / 100 + " м/c";
 
     // ejection angle:
     const eta = v * v / 2 - o.mu / r;
@@ -211,17 +213,17 @@ function doTheMaths() {
         eject = (90 - (phi * 180 / Math.PI) + (nu * 180 / Math.PI)) % 360;
     }
 
-    document.getElementById('ejection').value="" + Math.round(eject * 100) / 100 + "°";
+    document.getElementById('ejection').value = "" + Math.round(eject * 100) / 100 + "°";
 
     draw(o, d, p, Math.round(phase * 100) / 100, Math.round(eject * 100) / 100);
 }
 
 function draw(o, d, p, phase, eject) {
     // clear canvases
-    ctx_phase.clearRect(0,0, canvas_phase.width, canvas_phase.height);
+    ctx_phase.clearRect(0, 0, canvas_phase.width, canvas_phase.height);
     ctx_phase.resetTransform();
     ctx_phase.scale(size, size);
-    ctx_eject.clearRect(0,0, canvas_eject.width, canvas_eject.height);
+    ctx_eject.clearRect(0, 0, canvas_eject.width, canvas_eject.height);
     ctx_eject.resetTransform();
     ctx_eject.scale(size, size);
 
@@ -252,7 +254,9 @@ function draw(o, d, p, phase, eject) {
     ctx_phase.stroke();
 
     // origin body at 90° and its angle line
-    let orbit = o === low ? lowerOrbit : 160;
+    let orbit_o = o === low ? lowerOrbit : 160;
+    // destination body at 90° + phase angle and its line
+    let orbit_d = d === low ? lowerOrbit : 160;
 
     ctx_phase.beginPath();
     ctx_phase.strokeStyle = "#f22";
@@ -262,18 +266,16 @@ function draw(o, d, p, phase, eject) {
 
     ctx_phase.beginPath();
     ctx_phase.fillStyle = o.color;
-    ctx_phase.arc(180 + orbit, 180, 5, 0, Math.PI * 2);
+    ctx_phase.arc(180 + orbit_o, 180, 5, 0, Math.PI * 2);
     ctx_phase.fill();
 
     ctx_phase.fillStyle = "#333";
     ctx_phase.font = "9pt Consolas, Courier New, monospace";
-    ctx_phase.fillText(o.name, 180 + orbit, 192);
+    ctx_phase.fillText(o.name, 180 + orbit_o, 192);
 
-    // destination body at 90° + phase angle and its line
-    orbit = d === low ? lowerOrbit : 160;
     let rad = (-phase) * Math.PI / 180; // phase > 0 = ccw, in radians
-    const x = Math.round(180 + orbit * Math.cos(rad));
-    const y = Math.round(180 + orbit * Math.sin(rad));
+    const x = Math.round(180 + orbit_d * Math.cos(rad));
+    const y = Math.round(180 + orbit_d * Math.sin(rad));
     let xl = Math.round(180 + 180 * Math.cos(rad));
     let yl = Math.round(180 + 180 * Math.sin(rad));
 
@@ -291,6 +293,15 @@ function draw(o, d, p, phase, eject) {
     ctx_phase.fillStyle = "#333";
     ctx_phase.font = "9pt Consolas, Courier New, monospace";
     ctx_phase.fillText(d.name, x, y + 12);
+
+    ctx_phase.beginPath();
+    ctx_phase.strokeStyle = "#231";
+    ctx_phase.setLineDash([5, 5]);
+    let r_x = (orbit_o + orbit_d) / 2
+    ctx_phase.ellipse(o === low ? r_x + 20 : 340 - r_x, 180, r_x,
+        Math.sqrt(Math.pow(r_x, 2) - Math.pow(160 - r_x, 2)), 0, 0, Math.PI * 2);
+    ctx_phase.stroke();
+    ctx_phase.setLineDash([]);
 
     // phase angle arc
     let arcRadius = (lowerOrbit <= 60) ? Math.round((160 + lowerOrbit) / 2) : Math.round(lowerOrbit / 2);
