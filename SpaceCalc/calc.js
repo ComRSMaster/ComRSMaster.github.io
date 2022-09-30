@@ -1,5 +1,5 @@
 let data = {
-    // all values in km and corresponding
+    // все значения в км
     Sun: {
         name: "Солнце",
         parent: "Sun",
@@ -30,11 +30,11 @@ let data = {
     Earth: {
         name: "Земля",
         parent: "Sun",
-        alt: 149598261,
-        mu: 398600.4415,
-        radius: 6371,
-        inclination: 0,
-        soi: 929000,
+        alt: 149598261, // Высота от Солнца
+        mu: 398600.4415, // Гравитационный параметр (км^3/с^2)
+        radius: 6371, // Радиус
+        inclination: 0, // Наклон орбиты относительно Солнца
+        soi: 929000, // Радиус действия гравитации
         color: "skyblue"
     },
     Moon: {
@@ -102,22 +102,13 @@ let canvas_eject;
 let ctx_eject;
 let canvas_phase;
 let ctx_phase;
+let size;
 
 function init() {
-
     canvas_eject = document.getElementById('canvas-eject');
     ctx_eject = canvas_eject.getContext('2d');
     canvas_phase = document.getElementById('canvas-phase');
     ctx_phase = canvas_phase.getContext('2d');
-    const size = 360;
-    canvas_eject.style.width = size + "px";
-    canvas_eject.style.height = size + "px";
-    canvas_eject.width = size * window.devicePixelRatio;
-    canvas_eject.height = size * window.devicePixelRatio;
-    canvas_phase.style.width = size + "px";
-    canvas_phase.style.height = size + "px";
-    canvas_phase.width = size * window.devicePixelRatio;
-    canvas_phase.height = size * window.devicePixelRatio;
     let origins = document.getElementById('origin');
     let destinations = document.getElementById('destination');
     for (let p in data) {
@@ -146,6 +137,15 @@ function init() {
         d.value = p;
         d.innerHTML = data[p].name;
     }
+    resize();
+}
+
+function resize() {
+    canvas_phase.width = canvas_phase.getBoundingClientRect().width * window.devicePixelRatio;
+    canvas_phase.height = canvas_phase.width * 1;
+    canvas_eject.width = canvas_eject.getBoundingClientRect().width * window.devicePixelRatio;
+    canvas_eject.height = canvas_eject.width * 1;
+    size = canvas_eject.width / 360;
     doTheMaths();
 }
 
@@ -220,10 +220,10 @@ function draw(o, d, p, phase, eject) {
     // clear canvases
     ctx_phase.clearRect(0,0, canvas_phase.width, canvas_phase.height);
     ctx_phase.resetTransform();
-    ctx_phase.scale(window.devicePixelRatio, window.devicePixelRatio);
+    ctx_phase.scale(size, size);
     ctx_eject.clearRect(0,0, canvas_eject.width, canvas_eject.height);
     ctx_eject.resetTransform();
-    ctx_eject.scale(window.devicePixelRatio, window.devicePixelRatio);
+    ctx_eject.scale(size, size);
 
     ctx_phase.textAlign = "center";
     ctx_phase.textBaseline = 'middle';

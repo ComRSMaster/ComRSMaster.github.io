@@ -8,16 +8,16 @@
           integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">
 </head>
 
-<body onload="init()">
+<body onload="init()" onresize="resize()">
 <nav class="navbar navbar-dark bg-dark">
     <div class="container-fluid">
         <span class="navbar-brand mb-0 h1" href="#">Калькулятор перелётов</span>
     </div>
 </nav>
 <main class="container">
-    <div class="row g-3 my-3">
+    <div class="row row-cols-1 row-cols-sm-1 row-cols-md-2 row-cols-lg-3 g-3 my-3">
         <div class="col">
-            <div class="card text-center" style="width: min-content;">
+            <div class="card text-center border-light shadow">
                 <canvas class="card-img-top" id="canvas-phase"></canvas>
                 <hr class="mb-0 mt-0">
                 <div class="card-body text-dark">
@@ -27,7 +27,7 @@
             </div>
         </div>
         <div class="col">
-            <div class="card text-center" style="width: min-content;">
+            <div class="card text-center border-light shadow">
                 <canvas class="card-img-top" id="canvas-eject"></canvas>
                 <hr class="mb-0 mt-0">
                 <div class="card-body text-dark">
@@ -37,7 +37,7 @@
             </div>
         </div>
         <div class="col">
-            <div class="card border-info" style="width: 22rem;">
+            <div class="card border-info shadow">
                 <h5 class="card-header text-center">Калькулятор</h5>
                 <div class="card-body">
                     <form id="calculator card-text">
@@ -102,6 +102,11 @@
             </div>
         </div>
     </div>
+    <h1 class="fw-semibold mt-5">Как работает программа?</h1>
+    <p>На вход подаются конфигурация небесного тела:</p>
+    <ul>
+        <li></li>
+    </ul>
 </main>
 
 <script src="calc.js"></script>
